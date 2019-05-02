@@ -6,6 +6,7 @@ module.exports = function (app) {
 
 	const userController = require('../controllers/userController');
 	const productController = require('../controllers/productController');
+	const adminController = require('../controllers/adminController');
 
 	app.use(function (req, res, next) {
 		res.header("Access-Control-Allow-Origin", "*");
@@ -13,15 +14,17 @@ module.exports = function (app) {
 		next();
 	});
 	//user route
-	app.post('/api/auth/signup', [verifySignUp.checkDuplicateUserNameOrEmail], userController.signup);
+	app.post('/api/auth/register', [verifySignUp.checkDuplicateUserNameOrEmail], userController.signup);
 
-	app.post('/api/auth/signin', userController.signin);
+	app.post('/api/auth/login', userController.signin);
 
 	app.get('/api/test/user', [authJwt.verifyToken], userController.userContent);
 
 	app.get('/api/test/pm', [authJwt.verifyToken, authJwt.isPmOrAdmin], userController.managementBoard);
 
 	app.get('/api/test/admin', [authJwt.verifyToken, authJwt.isAdmin], userController.adminBoard);
+
+	app.get('/api/admin/getUser', [authJwt.verifyToken, authJwt.isAdmin], adminController.getUser);
 
 	//products
 	app.get('/api/product', productController.getProduct);
@@ -30,6 +33,8 @@ module.exports = function (app) {
 	
 	//cart 
 	app.get('/api/cart/', authJwt.verifyToken, productController.showCart);
+
+	app.post('/api/addCart/', authJwt.verifyToken, productController.showCart);
 
 
 }

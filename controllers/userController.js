@@ -13,7 +13,7 @@ exports.signup = (req, res) => {
 	User.create({
 		name: req.body.name,
 		username: req.body.username,
-		email: req.body.email,
+		// email: req.body.email,
 		password: bcrypt.hashSync(req.body.password, 8)
 	}).then(user => {
 		Role.findAll({
@@ -37,11 +37,12 @@ exports.signup = (req, res) => {
 exports.signin = (req, res) => {
 	User.findOne({
 		where: {
-			email: req.body.email
+			username: req.body.username
+			
 		}
 	}).then(user => {
 		if (!user) {
-			return res.status(404).send({ reason: 'email Not Found.' });
+			return res.status(404).send({ reason: 'Username Not Found.' });
 		}
 
 		var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
@@ -49,7 +50,7 @@ exports.signin = (req, res) => {
 			return res.status(401).send({ auth: false, accessToken: null, reason: 'Invalid Password!' });
 		}
 
-		var token = jwt.sign({ id: user.id }, config.secret, {
+		var token = jwt.sign({ id: user.id, username: user.username }, config.secret, {
 			expiresIn: 86400 // expires in 24 hours
 		});
 
@@ -61,7 +62,7 @@ exports.signin = (req, res) => {
 			res.status(200).send({
 				auth: true,
 				accessToken: token,
-				email: user.email,
+				// email: user.email,
 				authorities: authorities
 			});
 		})
@@ -73,7 +74,7 @@ exports.signin = (req, res) => {
 exports.userContent = (req, res) => {
 	User.findOne({
 		where: { id: req.userId },
-		attributes: ['name', 'username', 'email'],
+		attributes: ['name', 'username'],
 		include: [{
 			model: Role,
 			attributes: ['id', 'name'],
@@ -97,7 +98,7 @@ exports.userContent = (req, res) => {
 exports.adminBoard = (req, res) => {
 	User.findOne({
 		where: { id: req.userId },
-		attributes: ['name', 'username', 'email'],
+		attributes: ['name', 'username'],
 		include: [{
 			model: Role,
 			attributes: ['id', 'name'],
@@ -121,7 +122,7 @@ exports.adminBoard = (req, res) => {
 exports.managementBoard = (req, res) => {
 	User.findOne({
 		where: { id: req.userId },
-		attributes: ['name', 'username', 'email'],
+		attributes: ['name', 'username'],
 		include: [{
 			model: Role,
 			attributes: ['id', 'name'],
