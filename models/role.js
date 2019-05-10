@@ -1,20 +1,20 @@
 module.exports = (sequelize, Sequelize) => {
-  const Role = sequelize.define('roles', {
+  const role = sequelize.define('Role', {
     id: {
         type: Sequelize.INTEGER,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement:true
     },
     name: {
       type: Sequelize.STRING
-    }
+    },
+    createdAt:{ 
+      type: Sequelize.DATE, defaultValue: Sequelize.NOW 
+    },
+    updatedAt:{ 
+      type: Sequelize.DATE, defaultValue: Sequelize.NOW 
+    },
   });
-  Role.associate = function(models) {
-    Role.belongsToMany(models.User, {
-      through: 'user_roles',
-      as: 'user',
-      foreignKey: 'role_id'
-    });
-  };
   
-  return Role;
+  return role;
 }

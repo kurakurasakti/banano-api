@@ -8,7 +8,7 @@ require('./routes/router')(app);
 // const db = require('./config/dbConfig');
 
 // const Role = db.role;
-const port = 3030;
+const port = 2001;
 
 // force: true will drop the table if it already exists
 // db.sequelize.sync({force: true}).then(() => {

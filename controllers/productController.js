@@ -64,21 +64,23 @@ exports.showCart = (req,res)=>{
 exports.addToChart = (req,res) => {
   var qty = req.body.qty;
   var productId = req.body.productDetailId;
-  var userId = req.body.userId;
+  var userId = req.userId;
 
+  //console.log(qty, productId, userId);
   var sql = `insert into carts (productDetailId, userId, qty, isDeleted)
   values (${productId},${userId},${qty},false)`;
   dbs.query(sql, (err, result)=>{
     if (err) throw err;
-    res.send(result);
-    console.log("masuk");
+    res.status(200).send("successfully add item to cart");
+    // res.send(result);
+    // console.log("masuk");
   });
   
   
 };
 
 exports.checkout = (req,res) => {
-
+  
 }
 
 exports.showInvoice = (req,res) => {

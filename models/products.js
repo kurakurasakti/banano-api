@@ -1,38 +1,28 @@
 /* jshint indent: 2 */
 
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('products', {
+module.exports = function(sequelize, Sequelize) {
+  const products = sequelize.define('products', {
     id: {
-      type: DataTypes.INTEGER(11),
+      type: Sequelize.INTEGER(11),
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
     nama: {
-      type: DataTypes.STRING(255),
+      type: Sequelize.STRING(255),
       allowNull: true
     },
     description: {
-      type: DataTypes.STRING(255),
+      type: Sequelize.STRING(255),
       allowNull: true
     },
-    categoryId: {
-      type: DataTypes.INTEGER(11),
-      allowNull: true,
-      references: {
-        model: 'categories',
-        key: 'id'
-      }
+    createdAt:{ 
+      type: Sequelize.DATE, defaultValue: Sequelize.NOW 
     },
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false
+    updatedAt:{ 
+      type: Sequelize.DATE, defaultValue: Sequelize.NOW 
     }
-  }, {
-    tableName: 'products'
   });
+  
+  return products;
 };

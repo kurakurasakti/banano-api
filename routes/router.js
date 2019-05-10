@@ -14,7 +14,7 @@ module.exports = function (app) {
 		next();
 	});
 	//user route
-	app.post('/api/auth/register', [verifySignUp.checkDuplicateUserNameOrEmail], userController.signup);
+	app.post('/api/auth/register', [verifySignUp.checkDuplicateUserNameOrEmail, verifySignUp.checkRolesExisted], userController.signup);
 
 	app.post('/api/auth/login', userController.signin);
 
@@ -34,7 +34,7 @@ module.exports = function (app) {
 	//cart 
 	app.get('/api/cart/', authJwt.verifyToken, productController.showCart);
 
-	app.post('/api/addCart/', authJwt.verifyToken, productController.showCart);
+	app.post('/api/addCart/', authJwt.verifyToken, productController.addToChart);
 
 
 }

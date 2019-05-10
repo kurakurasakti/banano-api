@@ -1,26 +1,26 @@
 /* jshint indent: 2 */
 
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('categories', {
+module.exports = function(sequelize, Sequelize) {
+  const categories = sequelize.define('categories', {
     id: {
-      type: DataTypes.INTEGER(11),
+      type: Sequelize.INTEGER(11),
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
     nama: {
-      type: DataTypes.STRING(45),
+      type: Sequelize.STRING(45),
       allowNull: true
     },
     createdAt: {
-      type: DataTypes.DATE,
+      type: Sequelize.DATE,
       allowNull: false
     },
     updatedAt: {
-      type: DataTypes.DATE,
+      type: Sequelize.DATE,
       allowNull: false
     }
-  }, {
-    tableName: 'categories'
   });
+  
+  return categories;
 };

@@ -1,9 +1,9 @@
 const mysql = require('mysql2')
  
 const dbs = mysql.createConnection({
-    host : 'banano.localhost',
+    host : 'localhost',
     user: 'root' ,
-    password : '' ,
+    password : 'roysaputra' ,
     database : 'bananos_db' ,
     port : 3306 ,
 })
