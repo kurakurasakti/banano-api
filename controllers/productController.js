@@ -7,7 +7,7 @@ const dbs =require('../config/dbMysql');
 // const Op = db.Sequelize.Op;
 
 exports.getProduct = (req,res)=>{
-  var sql = `select p.id as productId, pd.id as pdid, p.nama, c.nama as category, pd.harga, pd.stock, cm.nama as warna, s.nama as size 
+  var sql = `select p.id as productId, pd.id as pdid, p.nama, c.nama as category, pd.price, pd.stock, cm.nama as warna, s.nama as size 
   from product_details pd
   join color_masters cm on cm.id = pd.colorId	
   join sizes s on s.id = pd.sizeId
@@ -26,7 +26,7 @@ exports.getProduct = (req,res)=>{
 exports.getProductDetail = (req,res)=>{
   var id = req.params.id
   var sql = `select p.id as productId, pd.id as productDetailid, p.nama, c.nama as category, 
-  pd.harga, pd.stock, cm.nama as warna, s.nama as size, p.description,
+  pd.price, pd.stock, cm.nama as warna, s.nama as size, p.description,
   cm.img1, cm.img2, cm.img3, s.bust, s.hip, s.length, s.waist
   from product_details pd
   join color_masters cm on cm.id = pd.colorId	
@@ -45,7 +45,7 @@ exports.getProductDetail = (req,res)=>{
 
 exports.showCart = (req,res)=>{
   var id = req.body.userId
-  var sql = `SELECT cr.userId, p.nama as product, cr.qty, pd.harga, s.nama as size, cm.img1
+  var sql = `SELECT cr.userId, p.nama as product, cr.qty, pd.price, s.nama as size, cm.img1
   FROM carts cr
   join product_details pd on pd.id = cr.productDetailId
   join color_masters cm on cm.id = pd.colorId
@@ -76,10 +76,36 @@ exports.addToChart = (req,res) => {
     // console.log("masuk");
   });
   
-  
 };
 
 exports.checkout = (req,res) => {
+  var userId = req.userId;
+  dateTime = new Date(time);
+
+  const day = dateTime.getDate();
+  const month = dateTime.getMonth();
+  const year = dateTime.getFullYear();
+  const code = dateTime.getMilliseconds();
+  const code2 = dateTime.getSeconds();
+  const invoiceDate = `${day}/${month}/${year}`;
+  const invNumber = `INV-${invoiceDate}-${code}${code2}`;
+  // const grandTotal
+  var sqlGetTott = 
+  `SELECT SUM(pd.price * c.qty) as total FROM carts c
+  join product_details pd on pd.id = c.productDetailId
+  where c.userId = ${userId}
+  and c.isDeleted = false
+  group by c.id
+  order by SUM(pd.price * c.qty) DESC;`;
+  // ambil totalnya dulu
+  dbs.query(sqlGetTott, (err, result)=>{
+   
+  });
+
+  //kalo udah masukin ke variable, abis itu baru di insert into table invoice
+  //abis invoice nya udh kebuat, bikin invocie detail pake foreach data dari cart sama uabg status dari isDeleted flase jadi true
+  
+  
   
 }
 

@@ -36,5 +36,5 @@ module.exports = function (app) {
 
 	app.post('/api/addCart/', authJwt.verifyToken, productController.addToChart);
 
-
+	app.get('/tes/checkout/', productController.checkout);
 }
