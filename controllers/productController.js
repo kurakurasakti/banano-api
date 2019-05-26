@@ -45,19 +45,23 @@ exports.getProductDetail = (req,res)=>{
 
 exports.showCart = (req,res)=>{
   var id = req.body.userId
-  var sql = `SELECT cr.userId, p.nama as product, cr.qty, pd.price, s.nama as size, cm.img1
+  var sql = `SELECT cr.id, cr.userId, p.nama as product, cr.qty, pd.price, SUM(pd.price * cr.qty) as totalBelanja, s.nama as size, cm.img1
   FROM carts cr
   join product_details pd on pd.id = cr.productDetailId
   join color_masters cm on cm.id = pd.colorId
   join sizes s on s.id = pd.sizeId
   join products p on p.id = cm.productId
-  where cr.userId = ${id}`
+  where cr.userId = ${id}
+  group by cr.id;`
 
   dbs.query(sql, (err, result)=>{
-    res.send(result);
-    if (err) {
-      console.log(sql + " " + err)  
-    };
+    var json = {};
+    json["items"] = result;   
+    json["totalHarga"] = result.reduce(function (accumulator, currentValue) {
+      return accumulator + parseInt(currentValue["totalBelanja"]);
+    }, 0);
+
+    res.send(json);
   });
 }
 
@@ -90,13 +94,7 @@ exports.checkout = (req,res) => {
   const invoiceDate = `${day}/${month}/${year}`;
   const invNumber = `INV-${invoiceDate}-${code}${code2}`;
   // const grandTotal
-  var sqlGetTott = 
-  `SELECT SUM(pd.price * c.qty) as total FROM carts c
-  join product_details pd on pd.id = c.productDetailId
-  where c.userId = ${userId}
-  and c.isDeleted = false
-  group by c.id
-  order by SUM(pd.price * c.qty) DESC;`;
+  
   // ambil totalnya dulu
   dbs.query(sqlGetTott, (err, result)=>{
    
