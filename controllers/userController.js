@@ -11,6 +11,7 @@ var bcrypt = require('bcrypt');
 exports.signup = (req, res) => {
 	// Save User to Database
 	User.create({
+		
 		name: req.body.name,
 		username: req.body.username,
 		// email: req.body.email,
@@ -60,9 +61,10 @@ exports.signin = (req, res) => {
 				authorities.push('ROLE_' + roles[i].name.toUpperCase());
 			}
 			res.status(200).send({
+				id : user.id,
+				username: user.username,
 				auth: true,
 				accessToken: token,
-				username: user.username,
 				authorities: authorities
 			});
 		})
@@ -143,6 +145,16 @@ exports.managementBoard = (req, res) => {
 	})
 }
 
-exports.addAddress = (req, res) => {
-	
+exports.keeplogin = (req, res) => {
+	User.findAll({
+		where :{
+
+			username : req.params.username
+		},
+		attributes: ['id', 'username'],
+	}).then((result) => {
+		res.status(200).send(result)
+	}).catch((err) => {
+		res.status(500).send(err)
+	});
 }

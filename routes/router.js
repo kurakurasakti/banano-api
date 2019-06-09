@@ -26,15 +26,22 @@ module.exports = function (app) {
 
 	app.get('/api/admin/getUser', [authJwt.verifyToken, authJwt.isAdmin], adminController.getUser);
 
+	app.get('/api/auth/keeplogin/:username', userController.keeplogin);
+
+
 	//products
 	app.get('/api/product', productController.getProduct);
 
 	app.get('/api/product/:id', productController.getProductDetail);
 	
 	//cart 
-	app.get('/api/cart/', authJwt.verifyToken, productController.showCart);
+	app.get('/api/cart/', productController.showCart);
 
 	app.post('/api/addCart/', authJwt.verifyToken, productController.addToChart);
 
-	app.get('/tes/checkout/', productController.checkout);
+	app.post('/tes/checkout/', productController.checkout);
+
+	//ADMIN
+
+	app.get('/admin/brand', adminController.getBrand)
 }
