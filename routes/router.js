@@ -43,5 +43,5 @@ module.exports = function (app) {
 
 	//ADMIN
 
-	app.get('/admin/brand', adminController.getBrand)
+	app.get('/admin/manage', adminController.getBrand)
 }
