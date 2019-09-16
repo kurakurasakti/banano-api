@@ -13,6 +13,7 @@ module.exports = function (app) {
 		res.header("Access-Control-Allow-Headers", "x-access-token, Origin, Content-Type, Accept");
 		next();
 	});
+	
 	//user route
 	app.post('/api/auth/register', [verifySignUp.checkDuplicateUserNameOrEmail, verifySignUp.checkRolesExisted], userController.signup);
 
@@ -30,9 +31,12 @@ module.exports = function (app) {
 
 
 	//products
-	app.get('/api/product', productController.getProduct);
+	app.get('/api/products', productController.getProduct);
 
 	app.get('/api/product/:id', productController.getProductDetail);
+
+	app.get('/api/categories', productController.getCategories);
+
 	
 	//cart 
 	app.get('/api/cart/', productController.showCart);

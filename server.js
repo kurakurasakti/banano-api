@@ -1,32 +1,24 @@
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
-app.use(bodyParser.json())
-
-require('./routes/router')(app);
+const express = require('express'); //import library
+const app = express();
 
 // const db = require('./config/dbConfig');
 
-// const Role = db.role;
-const port = 2001;
+const bodyParser = require('body-parser'); //buat get data dari json body
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+require('./routes/router')(app);
 
-// force: true will drop the table if it already exists
+const port = process.env.PORT || 2001;
+
+app.listen(port, "0.0.0.0", function() {
+    console.log("listening to port " + port)
+})
+
+app.get('/', (req,res)=>{
+    res.send('<h1>hallo</h1>');
+})
+
 // db.sequelize.sync({force: true}).then(() => {
-//   console.log('Drop and Resync with { force: true }');
-//   initial();
+//     console.log('Drop and Resync with { force: true }');
 // });
 
-// jalanin Server
-app.listen(port , ()=> console.log('activated ' + port));
-
-// function initial() {
-// 	Role.create({
-// 		id: 1,
-// 		name: "USER"
-// 	});
-
-// 	Role.create({
-// 		id: 3,
-// 		name: "ADMIN"
-// 	});
-// }

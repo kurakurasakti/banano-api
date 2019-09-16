@@ -7,13 +7,17 @@ const dbs =require('../config/dbMysql');
 // const Op = db.Sequelize.Op;
 
 exports.getProduct = (req,res)=>{
-  var sql = `select p.id as productId, pd.id as pdid, p.nama, c.nama as category, pd.price, pd.stock, cm.nama as warna, s.nama as size, pd.imgURL, pd.status
-  from product_details pd
-  join color_masters cm on cm.id = pd.colorId	
-  join sizes s on s.id = pd.sizeId
-  join products p on p.id = cm.productId
-  join categories c on c.id = p.categoryId
-  where pd.status = 1`;
+  // var sql = `select p.id as productId, pd.id as pdid, p.name, c.name as category, pd.price, pd.stock, cm.name as warna, s.name as size, pd.imgURL, pd.status
+  // from product_details pd
+  // join color_masters cm on cm.id = pd.colorId	
+  // join sizes s on s.id = pd.sizeId
+  // join products p on p.id = cm.productId
+  // join categories c on c.id = p.categoryId
+  // where pd.status = 1`;
+
+  const sql = `select p.id, p.name, p.description, ps.price, cm.name as color, cm.img1 from products p
+  join color_masters cm on cm.productId = p.id
+  join prices ps on ps.productId = p.id`
 
   dbs.query(sql, (err, result)=>{
     res.send(result);
@@ -21,7 +25,6 @@ exports.getProduct = (req,res)=>{
       res.send(err);
     };
   });
-  
 }
 
 exports.getProductDetail = (req,res)=>{
@@ -146,8 +149,6 @@ exports.checkout = (req,res) => {
   //kalo udah masukin ke variable, abis itu baru di insert into table invoice
   //abis invoice nya udh kebuat, bikin invocie detail pake foreach data dari cart sama uabg status dari isDeleted flase jadi true
   
-  
-  
 }
 
 exports.showInvoice = (req,res) => {
@@ -156,5 +157,16 @@ exports.showInvoice = (req,res) => {
 
 exports.showInvoiceDetail = (req, res) => {
   
+}
+
+exports.getCategories = (req, res) =>{
+  let sql = `SELECT * FROM categories;`
+  dbs.query(sql, (err,result)=>{
+    if (err) {
+      console.log('error'+err);
+      res.status(400).send(err);
+    }
+    res.json(result)
+  })
 }
 
