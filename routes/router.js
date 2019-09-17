@@ -37,6 +37,12 @@ module.exports = function (app) {
 
 	app.get('/api/categories', productController.getCategories);
 
+	//product detail
+	
+	app.get('/api/products', productController.getProduct);
+
+	app.get('/api/categories', productController.getCategories);
+
 	
 	//cart 
 	app.get('/api/cart/', productController.showCart);
@@ -48,4 +54,40 @@ module.exports = function (app) {
 	//ADMIN
 
 	app.get('/admin/manage', adminController.getBrand)
+
+
+
+
+
+
+
+
+	//MARIN
+	//product detail==============
+
+	app.get('/api/productDetail/:id', productController.getListProductDetailById);
+	app.get('/api/productDetailSize/:id', productController.getListProductDetailSizeById);
+
+	//
+	app.get('/api/productByCategory/:id', productController.getListProductByCategory);
+
+
+
+
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+

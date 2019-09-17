@@ -170,3 +170,60 @@ exports.getCategories = (req, res) =>{
   })
 }
 
+
+
+//p========================roduct detai================================
+
+exports.getListProductDetailById = (req,res) => {
+  var id = req.params.id
+  var sql = `SELECT A.id, A.name, A.description, A.price, A.gambarbrand, B.id, B.name, B.img1, B.img2
+  FROM  products A
+  JOIN color_masters B
+  ON A.id = B.productId
+  WHERE A.id = ${id}`;
+
+  dbs.query(sql, (err, result)=>{
+    if (err) {
+      res.send(err);
+    };
+    res.send(result);
+  });
+}
+
+exports.getListProductDetailSizeById = (req,res) => {
+  var id = req.params.id
+  var sql = `SELECT A.id, A.stock, B.name, A.gambarbrand, B.id, B.name, B.img1, B.img2
+  FROM product_details  A
+  JOIN color_masters B
+  ON B.id = A.productId
+  JOIN sizes C
+  ON C.id = A.sizeId
+  WHERE B.id = ${id}`;
+
+  dbs.query(sql, (err, result)=>{
+    if (err) {
+      res.send(err);
+    };
+    res.send(result);
+  });
+
+
+  
+  exports.getListProductByCategory = (req,res) => {
+    var id = req.params.id
+    var sql = `SELECT A.id, A.name, A.description, A.price, A.gambarbrand, B.id, B.name, B.img1, B.img2
+    FROM  products A
+    JOIN color_masters B
+    ON A.id = B.productId
+    JOIN categories C
+    ON C.id = A.id
+    WHERE C.id = ${id}`;
+  
+    dbs.query(sql, (err, result)=>{
+      if (err) {
+        res.send(err);
+      };
+      res.send(result);
+    });
+  }
+}

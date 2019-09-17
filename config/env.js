@@ -1,8 +1,8 @@
 const env = {
-    database: 'bananos_db',
-    username: 'root',
-    password: 'roysaputra',
-    host: 'localhost',
+    database: '0uuPG17qWD',
+    username: '0uuPG17qWD',
+    password: 'kr941B4cU7',
+    host: 'remotemysql.com',
     dialect: 'mysql',
     pool: {
       max: 5,
