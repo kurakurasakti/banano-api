@@ -14,7 +14,7 @@ exports.signup = (req, res) => {
 		
 		name: req.body.name,
 		username: req.body.username,
-		// email: req.body.email,
+		email: req.body.email,
 		password: bcrypt.hashSync(req.body.password, 8)
 	}).then(user => {
 		Role.findAll({
