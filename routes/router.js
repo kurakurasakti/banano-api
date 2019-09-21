@@ -55,31 +55,13 @@ module.exports = function (app) {
 
 	app.get('/admin/manage', adminController.getBrand)
 
-
-
-
-
-
-
-
 	//MARIN
 	//product detail==============
 
 	app.get('/api/productDetail/:id', productController.getListProductDetailById);
 	app.get('/api/productDetailSize/:id', productController.getListProductDetailSizeById);
 
-	//
-	app.get('/api/productByCategory/:id', productController.getListProductByCategory);
-
-
-
-
-
-
-
-
-
-
+	// app.get('/api/productByCategory/:id', productController.getListProductByCategory);
 
 }
 

@@ -38,7 +38,7 @@ exports.signup = (req, res) => {
 exports.signin = (req, res) => {
 	User.findOne({
 		where: {
-			username: req.body.username
+			email: req.body.email
 			
 		}
 	}).then(user => {
@@ -51,7 +51,7 @@ exports.signin = (req, res) => {
 			return res.status(401).send({ auth: false, accessToken: null, reason: 'Invalid Password!' });
 		}
 
-		var token = jwt.sign({ id: user.id, username: user.username }, config.secret, {
+		var token = jwt.sign({ id: user.id, username: user.username, email: user.email }, config.secret, {
 			expiresIn: 86400 // expires in 24 hours
 		});
 

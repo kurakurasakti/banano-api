@@ -8,12 +8,16 @@ module.exports = function(sequelize, Sequelize) {
       primaryKey: true,
       autoIncrement: true
     },
-    nama: {
+    name: {
       type: Sequelize.STRING(255),
       allowNull: true
     },
     description: {
       type: Sequelize.STRING(255),
+      allowNull: true
+    },
+    price: {
+      type: Sequelize.INTEGER(11),
       allowNull: true
     },
     createdAt:{ 

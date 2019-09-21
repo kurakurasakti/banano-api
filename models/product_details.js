@@ -7,10 +7,6 @@ module.exports = function(sequelize, Sequelize) {
       primaryKey: true,
       autoIncrement: true
     },
-    harga: {
-      type: Sequelize.INTEGER(11),
-      allowNull: true
-    },
     stock: {
       type: Sequelize.INTEGER(11),
       allowNull: true

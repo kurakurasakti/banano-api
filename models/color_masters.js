@@ -8,7 +8,7 @@ module.exports = function(sequelize, Sequelize) {
       primaryKey: true,
       autoIncrement: true
     },
-    nama: {
+    name: {
       type: Sequelize.STRING(191),
       allowNull: false
     },
@@ -20,17 +20,11 @@ module.exports = function(sequelize, Sequelize) {
       type: Sequelize.STRING(255),
       allowNull: true
     },
-    img3: {
-      type: Sequelize.STRING(255),
-      allowNull: true
-    }, 
     createdAt:{ 
       type: Sequelize.DATE, defaultValue: Sequelize.NOW 
     },
     updatedAt:{ 
       type: Sequelize.DATE, defaultValue: Sequelize.NOW 
-    },
-  }, {
-    tableName: 'color_masters'
-  });
-};
+    }
+  })
+}

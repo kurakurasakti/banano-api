@@ -41,13 +41,13 @@ db.role.belongsToMany(db.user, { through: 'user_roles', foreignKey: 'roleId', ot
 db.user.belongsToMany(db.role, { through: 'user_roles', foreignKey: 'userId', otherKey: 'roleId'});
 // product
 
+db.product.hasMany(db.color_master, {foreignKey: 'productId', sourceKey: 'id'});
+db.color_master.belongsTo(db.product, {foreignKey: 'productId', sourceKey: 'id'});
+
 // prod detail
-
-//color
-
-//carts
-
-//invoicedetail
-
+db.color_master.hasMany(db.product_detail, {foreignKey: 'colorId', sourceKey:'id'});
+db.product_detail.belongsTo(db.color_master, {foreignKey: 'colorId', sourceKey:'id'})
+db.product_detail.belongsTo(db.sizes, {foreignKey: 'sizeId', sourceKey:'id'})
+db.sizes.hasMany(db.product_detail, {foreignKey: 'sizeId', sourceKey:'id'});
 
 module.exports = db;
