@@ -59,7 +59,7 @@ module.exports = function (app) {
 	//product detail==============
 
 	app.get('/api/productDetail/:id', productController.getListProductDetailById);
-	app.get('/api/productDetailSize/:id', productController.getListProductDetailSizeById);
+	// app.get('/api/productDetailSize/:id', productController.getListProductDetailSizeById);
 
 	// app.get('/api/productByCategory/:id', productController.getListProductByCategory);
 

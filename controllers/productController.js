@@ -172,6 +172,7 @@ exports.getListProductDetailById = (req, result) => {
     where: {
       id: id
     },
+    attributes:["id","name", "description", "price"],
     include: [
       {
         model: Color,
@@ -192,27 +193,6 @@ exports.getListProductDetailById = (req, result) => {
     });
 };
 
-exports.getListProductDetailSizeById = (req, res) => {
-  
-
-  // var id = req.params.id;
-  // var sql = `SELECT A.id, A.stock, B.name, B.id, B.name, B.img1, B.img2
-  // FROM product_details  A
-  // JOIN color_masters B
-  // ON B.id = A.productId
-  // JOIN sizes C
-  // ON C.id = A.sizeId
-  // WHERE B.id = ${id}`;
-
-  // dbs.query(sql, (err, result) => {
-  //   if (err) {
-  //     res.send(err);
-  //   }
-  //   res.send(result);
-  // });
-  
-
-};
 
 exports.getListProductByCategory = (req, res) => {
   var id = req.params.id;
